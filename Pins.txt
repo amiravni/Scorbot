@@ -1,0 +1,20 @@
+#/PIN/MOTOR
+
+34	P0	G        18	P0	5	     1	P0	2	               
+35	P0	4        19	P1	G	     2	P0	1	               
+36	P0	3        20	P1	4	     3	P1	5	               
+37		           21	P1	2	     4	P1	3	               
+38		           22	MS	G      5	P1	1	               
+39      		     23	MS	1	     6	MS	5	               
+40		           24	MS	3	     7	MS	2	               
+41		           25	LED	G	     8	MS	4	               
+42		           3	26	LED	   9	LED	5	                 
+4	43		         1	27	LED	   10	LED	                 
+2	44		         G	28	GND	   11	LED	                 
+45	M1	G        5	29	GND	   12	M2	G	                
+46	M1	5        4	30	GND	   13	M2	5	                
+47	M1	4        3	31	GND	   14	M2	4	                
+48	M1	3        2	32	GND	   15	M2	3	                
+49	M1	2        1	33	GND	   16	M2	2	                
+50	M1	1                      17	M2	1	    
+                    
