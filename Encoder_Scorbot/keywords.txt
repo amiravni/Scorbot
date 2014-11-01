@@ -1,0 +1,23 @@
+#######################################
+# Syntax Coloring Map FastSPI
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+encoder_begin	KEYWORD2
+
+attach_encoder	KEYWORD2
+dettach_encoder	KEYWORD2
+
+encoder_data	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
