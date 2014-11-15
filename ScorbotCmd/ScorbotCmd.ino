@@ -1,4 +1,4 @@
-#define LEDPIN 49
+#define LEDPIN 13
 #define TESTLED 1
 
 #include "Encoder_Scorbot.h"
@@ -21,9 +21,9 @@ volatile long  counter[6]={
   0,0,0,0,0,0};
 // —————————————————————————  Motors
 const int M1[6] = {
-  14,4,6,8,10,12};
+  36,38,40,42,44,46};
 const int M2[6] = {
-  15,5,7,9,11,13};
+  37,39,41,43,45,47};
 
 
 
@@ -68,6 +68,7 @@ void loop() {
     initWrapper();
     break;
   case '1':
+     controlOneArm();
     break;
   case '2':
     break;
@@ -218,6 +219,9 @@ int init(boolean initMTRCCW[6] ) {
       }; 
       motorST(M1[i],M2[i]);
     }
+    else {
+      Serial.println("MS is pressed");
+   }
   }
   Serial.println("Init Motor #3+#4 (1)");
   int i=3;
@@ -237,6 +241,9 @@ int init(boolean initMTRCCW[6] ) {
     motorST(M1[i],M2[i]);
     motorST(M1[i+1],M2[i+1]);
   }
+      else {
+      Serial.println("MS is pressed");
+   }
 
   Serial.println("Init Motor #3+#4 (2)");
   if (digitalRead(MS[i+1])) {
@@ -255,6 +262,9 @@ int init(boolean initMTRCCW[6] ) {
     motorST(M1[i],M2[i]);
     motorST(M1[i+1],M2[i+1]);
   }  
+      else {
+      Serial.println("MS is pressed");
+   }
 
   i=5;
   Serial.println("Init GRIPPER");
@@ -306,12 +316,107 @@ void initWrapper()
 }
 
 
+void controlOneArm()
+{
+      Serial.println("Choose arm (0-5):");
+      while  (Serial.available() == 0);
+     char arm = Serial.read() - 48;
+      Serial.println("Choose Direction (0/1):");
+      while  (Serial.available() == 0);
+      char dir = Serial.read() - 48;
+        Serial.println("Choose Time / Step (0/1):");  
+       while  (Serial.available() == 0);
+      char TimeOrStep = Serial.read() - 48;    
+  if (TimeOrStep == 0) {        Serial.println("How long? (Sec) ");
+  }
+  else {
+    Serial.println("How much steps? ");
+}
+       while  (Serial.available() == 0);
+    int amount = getMultInput( );
+  
+  Serial.print((int)arm);
+  Serial.print(" , ");
+  Serial.print((int)dir);
+  Serial.print(" , ");
+  Serial.print((int)TimeOrStep);
+  Serial.print(" , ");
+  Serial.println((int)amount);
+  
+  switch (arm) {
+    case 0:
+    case 1:
+    case 2:
+    case 5:
+    if (dir) {
+     motorFW(M1[arm],M2[arm]);
+    }
+    else
+    {
+      motorBW(M1[arm],M2[arm]);
+    }
+        break;
+     case 3:
+     if (dir) {
+     motorFW(M1[arm],M2[arm]);
+     motorBW(M1[arm+1],M2[arm+1]);
+    }
+    else
+    {
+     motorBW(M1[arm],M2[arm]);
+     motorFW(M1[arm+1],M2[arm+1]);
+    }   
+        break;   
+    case 4:
+     if (dir) {
+     motorFW(M1[arm-1],M2[arm-1]);
+     motorFW(M1[arm],M2[arm]);
+    }
+    else
+    {
+     motorBW(M1[arm-1],M2[arm-1]);
+     motorBW(M1[arm],M2[arm]);
+    }       
+    break;
+  }
+  
+  
+  
+    if (TimeOrStep == 0)  {
+      unsigned long startTime=millis();
+      while( millis() - startTime < amount*1000 );
+      stopMotors();
+    }
+    else
+    {
+     // while(  < amount ); TODO
+      stopMotors();      
+    }
+       
+}
 void cleanSerial() {
   delay(10);
    while  (Serial.available() > 0)    Serial.read(); 
 }
 
+boolean  checkInput( char input, char inStart, char inEnd ) {
+ //TODO 
+}
 
+int  getMultInput( ) {
+ int i=1;
+ int res=0;
+  while  (Serial.available() != 0) {
+    res = res*i + (int)(Serial.read() - 48);
+    i = i*10;    
+  }
+  return res;
+}
 
-
+void stopMotors()
+{
+  for (int i=0;i<6;i++) {
+     motorST(M1[i],M2[i]);
+  }
+}
 
