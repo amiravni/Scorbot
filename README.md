@@ -1,4 +1,4 @@
-This is my work of building a Scorbot ER-V Controller with an arduino MEGA and L293D drivers.
+This is my work of building a Scorbot ER-V Controller with an arduino MEGA and drivers.
 
 Files and Folders consist of:
 
