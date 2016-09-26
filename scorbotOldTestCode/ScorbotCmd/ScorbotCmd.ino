@@ -20,11 +20,12 @@ const int pin_P1[6] = {
 volatile long  counter[6]={
   0,0,0,0,0,0};
 // —————————————————————————  Motors
-const int M1[6] = {
-  36,38,40,42,44,46};
-const int M2[6] = {
-  37,39,41,43,45,47};
-
+//const int M1[6] = {
+//  36,38,40,42,44,46};
+//const int M2[6] = {
+//  37,39,41,43,45,47};
+const int M2[6] = {14, 4, 22, 8, 10, 12};
+const int M1[6] = {15, 5, 7, 9, 11, 13};
 
 
 // ————————————————————————— Setup
@@ -327,13 +328,15 @@ void controlOneArm()
         Serial.println("Choose Time / Step (0/1):");  
        while  (Serial.available() == 0);
       char TimeOrStep = Serial.read() - 48;    
-  if (TimeOrStep == 0) {        Serial.println("How long? (Sec) ");
+  if (TimeOrStep == 0) {
+    Serial.println("How long? (Sec) ");
   }
   else {
     Serial.println("How much steps? ");
-}
-       while  (Serial.available() == 0);
-    int amount = getMultInput( );
+  }
+  //while  (Serial.available() == 0);
+  //  int amount = getMultInput( );
+  int amount = Serial.parseInt();
   
   Serial.print((int)arm);
   Serial.print(" , ");
@@ -348,36 +351,34 @@ void controlOneArm()
     case 1:
     case 2:
     case 5:
-    if (dir) {
-     motorFW(M1[arm],M2[arm]);
-    }
-    else
-    {
-      motorBW(M1[arm],M2[arm]);
-    }
-        break;
-     case 3:
-     if (dir) {
-     motorFW(M1[arm],M2[arm]);
-     motorBW(M1[arm+1],M2[arm+1]);
-    }
-    else
-    {
-     motorBW(M1[arm],M2[arm]);
-     motorFW(M1[arm+1],M2[arm+1]);
-    }   
-        break;   
+      if (dir) {
+       motorFW(M1[arm],M2[arm]);
+      }
+      else
+      {
+        motorBW(M1[arm],M2[arm]);
+      }
+      break;
+    case 3:
+      if (dir) {
+        motorFW(M1[arm],M2[arm]);
+        motorBW(M1[arm+1],M2[arm+1]);
+      }
+      else
+      {
+        motorBW(M1[arm],M2[arm]);
+        motorFW(M1[arm+1],M2[arm+1]);
+      }   
+      break;   
     case 4:
-     if (dir) {
-     motorFW(M1[arm-1],M2[arm-1]);
-     motorFW(M1[arm],M2[arm]);
-    }
-    else
-    {
-     motorBW(M1[arm-1],M2[arm-1]);
-     motorBW(M1[arm],M2[arm]);
-    }       
-    break;
+      if (dir) {
+        motorFW(M1[arm-1],M2[arm-1]);
+        motorFW(M1[arm],M2[arm]);
+      } else {
+        motorBW(M1[arm-1],M2[arm-1]);
+        motorBW(M1[arm],M2[arm]);
+      }       
+      break;
   }
   
   
@@ -407,7 +408,9 @@ int  getMultInput( ) {
  int i=1;
  int res=0;
   while  (Serial.available() != 0) {
-    res = res*i + (int)(Serial.read() - 48);
+    if (res>0)
+      res = res*10;
+    res +=  (int)(Serial.read() - 48);
     i = i*10;    
   }
   return res;
