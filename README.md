@@ -1,5 +1,7 @@
 This is my work of building a Scorbot ER-V Controller with an arduino MEGA and drivers.
 
+The project description is here: http://whatimade.today/geekcon-xii-scorbot-learns-to-draw/
+
 Files and Folders consist of:
 
 scorbotCOMcontrol - Most updated code, can get 6 encoder values and moves towards them
