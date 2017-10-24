@@ -24,6 +24,6 @@ scorbotOldTestCode - My early work on scorbot, described here: http://www.whatim
 * Encoder_Scorbot - CPP code for encoders, taken and modified from  https://github.com/frodofski/Encoder_Polling_V2
 
 * ScorbotCmd - The final code for controlling the Scorbot (Under Construction)
-<p style='color:red'>
+<div style='color:red'>
 * ScorbotTest - Test code for Motors, Encoders and MicroSwitches
-</p>
+</div>
